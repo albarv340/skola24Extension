@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Skola24 Options</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body class="text-center">
+    <div class="form-signin">
+      <img class="mb-4" src="berzan.svg" alt="" width="72" height="72" />
+      <h1 class="h3 mb-3 font-weight-normal">Select saved class</h1>
+      <label for="inputEmail" class="sr-only">Class: </label>
+      <input
+        type="text"
+        id="inputClass"
+        class="form-control"
+        placeholder="Class"
+        required
+        autofocus
+      />
+      <button id="save" class="btn btn-lg btn-primary btn-block" type="submit">
+        Save Class
+      </button>
+      <div id="status"></div>
+    </div>
+    <script src="options.js"></script>
+  </body>
+</html>
