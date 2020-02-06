@@ -29,7 +29,55 @@ if (window.location.href.includes("skola24")) {
   document.getElementById(
     "signatures"
   ).outerHTML = `<input id="signatures" autocomplete="off" type="text" data-role="textbox" data-bind="enabled: timetableSelectionEnabled" value="${savedClass}" placeholder="Ange ID" class="w-input w-block">`;
-
+  chrome.storage.sync.get(
+    {
+      darkMode: false
+    },
+    function(items) {
+      if (items.darkMode) {
+        const css = `
+    #schemaContent {
+     filter: invert(90%); 
+     outline: 1px solid black;
+    }
+    .w-panel{
+      background-color:rgb(29, 30, 33);
+      color:white;
+      outline: 1px solid white;
+    }
+    .w-icon{
+      color: white;
+    }
+    input{
+      filter: invert(98%); 
+      color:black;
+    }
+    .k-widget{
+      filter: invert(100%); 
+    }
+    .w-button{
+      background-color:white;
+      filter: invert(98%); 
+    }
+    body{
+      background-color:rgb(32, 33, 36);
+    }
+    li{
+      background-color:black;
+      color:white;
+    }
+    #timetablePlaceholder{
+      filter: invert(90%); 
+    }
+    `,
+          head = document.head || document.getElementsByTagName("head")[0],
+          style = document.createElement("style");
+        head.appendChild(style);
+        style.type = "text/css";
+        style.appendChild(document.createTextNode(css));
+      }
+    }
+  );
   // $("body")
   //   .children()
   //   .append(

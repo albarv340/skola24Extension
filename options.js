@@ -7,7 +7,7 @@ function save_options() {
     },
     function() {
       // Update status to let user know options were saved.
-      var status = document.getElementById("status");
+      let status = document.getElementById("status");
       status.textContent = "Options saved.";
       setTimeout(function() {
         status.textContent = "";
@@ -16,10 +16,48 @@ function save_options() {
   );
 }
 
+function save_dark_mode(mode) {
+  chrome.storage.sync.set(
+    {
+      darkMode: mode
+    },
+    function() {
+      // Update status to let user know options were saved.
+      let status = document.getElementById("status");
+      status.textContent = "Options saved.";
+      setTimeout(function() {
+        status.textContent = "";
+      }, 750);
+    }
+  );
+}
+
+$("#nightModeToggle").mouseup(e => {
+  if ($("body").css("background-color") === "rgb(0, 0, 0)") {
+    $("body").css("background-color", "rgb(245, 245, 245)");
+    $("body").css("color", "black");
+    save_dark_mode(false);
+  } else {
+    $("body").css("background-color", "black");
+    $("body").css("color", "rgb(245, 245, 245)");
+    save_dark_mode(true);
+  }
+});
 // Restores select box and checkbox state using the preferences
 // stored in chrome.storage.
 function restore_options() {
-  // Use default value color = 'red' and likesColor = true.
+  chrome.storage.sync.get(
+    {
+      darkMode: false
+    },
+    function(items) {
+      if (items.darkMode) {
+        $("#nightModeCheckbox").attr("checked", "");
+        $("body").css("background-color", "black");
+        $("body").css("color", "rgb(245, 245, 245)");
+      }
+    }
+  );
   chrome.storage.sync.get(
     {
       savedClass: "TE17E"

@@ -1,4 +1,27 @@
 if (window.location.href.includes("skolmaten.se")) {
+  chrome.storage.sync.get(
+    {
+      darkMode: false
+    },
+    function(items) {
+      if (items.darkMode) {
+        const css = `
+                    *{
+                       background-color:rgb(32, 33, 36) !important;
+                       color:white !important;
+                    }
+                    a, a span{
+                      color:#2194f9 !important;
+                    }
+                    `,
+          head = document.head || document.getElementsByTagName("head")[0],
+          style = document.createElement("style");
+        head.appendChild(style);
+        style.type = "text/css";
+        style.appendChild(document.createTextNode(css));
+      }
+    }
+  );
   let schemaUrl;
   chrome.storage.sync.get(
     {

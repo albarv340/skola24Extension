@@ -16,7 +16,16 @@
   <body class="text-center">
     <div class="form-signin">
       <img class="mb-4" src="berzan.svg" alt="" width="72" height="72" />
-      <h1 class="h3 mb-3 font-weight-normal">Select saved class</h1>
+      <div class="input-group">
+        <h2 class="h3 mb-3 font-weight-normal ">Night Mode</h2>
+        <label id="nightModeToggle" class="switch p-3 ml-auto">
+          <input id="nightModeCheckbox" type="checkbox" />
+          <span class="slider round"></span>
+        </label>
+      </div>
+      <div class="input-group">
+        <h2 class="h3 mb-3 font-weight-normal mr-auto">Select saved class</h2>
+      </div>
       <label for="inputEmail" class="sr-only">Class: </label>
       <input
         type="text"
@@ -31,6 +40,7 @@
       </button>
       <div id="status"></div>
     </div>
+    <script src="jquery.min.js"></script>
     <script src="options.js"></script>
   </body>
 </html>
