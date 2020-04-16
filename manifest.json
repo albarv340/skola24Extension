@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Skola24 Schema",
-  "version": "0.5",
+  "version": "2.0",
   "content_scripts": [
     {
       "matches": ["https://web.skola24.se/*", "https://skolmaten.se/*"],

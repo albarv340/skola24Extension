@@ -1,42 +1,45 @@
 /* global $ */
 if (window.location.href.includes("skola24")) {
   $(".w-page-header").remove();
-  $(".scheduleselection")
-    .children()
-    .eq(0).append(`<div class="selectordiv w-col w-s6 w-m3 w-l2">
-                                <a href="http://skolmaten.se/berzeliusskolan/" class="w-button w-block">
+  $(".w-panel-content").children().eq(0).append(
+    `<div class="w-col w-s6 w-m3 w-l2">
+      <div style="width: 100%;">
+      <label for="bd13cbe1f8feb66258859320dbfac1b6" class="">
+      <span>Skolmaten</span> <!---->
+      </label> <div class="w-flex">
+      <a href="http://skolmaten.se/berzeliusskolan/" class="w-button w-block">
                                     Skolmaten &#127860;
-                                </a>
-                            </div>`);
-  $(".scheduleselection")
-    .children()
-    .eq(0).append(`<div class="selectordiv w-col w-s2 w-m1 w-l1">
-                                <button class="w-button w-block" id="previousWeek">
+                                </a></div></div></div>`
+  );
+  $(".w-panel-content").children().eq(0).append(
+    `<div class="w-col w-s6 w-m3 w-l2">
+      <div style="width: 100%;">
+      <label for="bd13cbe1f8feb66258859320dbfac1b6" class="">
+      <span>Vecka</span> <!---->
+      </label> <div class="w-flex">
+                                <button class="w-button w-block" style="margin-right:10px" id="previousWeek">
                                     <
                                 </button>
-                            </div>`);
-  $(".scheduleselection")
-    .children()
-    .eq(0).append(`<div class="selectordiv w-col w-s2 w-m1 w-l1">
                                 <button class="w-button w-block" id="nextWeek">
                                     >
                                 </button>
-                            </div>`);
+                            </div></div></div>`
+  );
 
   let savedClass = window.location.pathname.split("/")[
     window.location.pathname.split("/").length - 2
   ];
-  document.getElementById(
-    "signatures"
-  ).outerHTML = `<input id="signatures" autocomplete="off" type="text" data-role="textbox" data-bind="enabled: timetableSelectionEnabled" value="${savedClass}" placeholder="Ange ID" class="w-input w-block">`;
+  // document.getElementById(
+  //   "signatures"
+  // ).outerHTML = `<input id="signatures" autocomplete="off" type="text" data-role="textbox" data-bind="enabled: timetableSelectionEnabled" value="${savedClass}" placeholder="Ange ID" class="w-input w-block">`;
   chrome.storage.sync.get(
     {
-      darkMode: false
+      darkMode: false,
     },
-    function(items) {
+    function (items) {
       if (items.darkMode) {
         const css = `
-    #schemaContent {
+    .w-timetable {
      filter: invert(90%); 
      outline: 1px solid black;
     }
@@ -44,6 +47,9 @@ if (window.location.href.includes("skola24")) {
       background-color:rgb(29, 30, 33);
       color:white;
       outline: 1px solid white;
+    }
+    .w-block{
+      background-color:black;
     }
     .w-icon{
       color: white;
@@ -95,8 +101,8 @@ if (window.location.href.includes("skola24")) {
   //   console.log(e);
   // });
 
-  document.addEventListener("keydown", function(event) {
-    if (!$("#signatures").is(":focus")) {
+  document.addEventListener("keyup", function (event) {
+    if (!$("input").is(":focus")) {
       if (event.key == "d" || event.key == "ArrowRight") {
         nextWeek();
       } else if (event.key == "a" || event.key == "ArrowLeft") {
@@ -111,92 +117,46 @@ if (window.location.href.includes("skola24")) {
     }
   });
 
-  $("#previousWeek").click(function(event) {
+  $("#previousWeek").click(function (event) {
     previousWeek();
   });
-  $("#nextWeek").click(function(event) {
+  $("#nextWeek").click(function (event) {
     nextWeek();
   });
 
   function nextWeek() {
-    let currentWeek = parseInt($("#selectedWeekDropDown").val());
-    if (currentWeek === 52) {
-      currentWeek = 0;
+    let currentWeek = parseInt(
+      $(`[data-identifier="weekSelection"]`).children().eq(2).val()
+    );
+    currentWeek++;
+    let child;
+    if (currentWeek <= 26) {
+      child = 26 + currentWeek;
+    } else {
+      child = child = currentWeek - 26;
     }
-    document.getElementsByClassName(
-      "k-list"
-    )[0].parentElement.style.opacity = 0;
-    document.getElementsByClassName(
-      "k-list"
-    )[1].parentElement.style.opacity = 0;
-    $("#selectedWeekDropDown")
-      .val(currentWeek + 1)
-      .trigger("change");
-    $(".weekcontainer")
-      .children()
-      .children()
+    document
+      .querySelector(
+        `body > div:nth-child(3) > div > div > div.w-panel > div.w-panel-content > div:nth-child(1) > div:nth-child(2) > div > div > ul > li:nth-child(${child}) > a`
+      )
       .click();
-    setTimeout(() => {
-      $(".schoolcontainer")
-        .children()
-        .children()
-        .click();
-      setTimeout(() => {
-        $(".weekcontainer")
-          .children()
-          .children()
-          .click();
-        setTimeout(() => {
-          document.getElementsByClassName(
-            "k-list"
-          )[0].parentElement.style.opacity = 100;
-          document.getElementsByClassName(
-            "k-list"
-          )[1].parentElement.style.opacity = 100;
-        }, 100);
-      }, 1);
-    }, 1);
-    $(".k-input:eq(1)").text("Vecka " + parseInt(currentWeek + 1));
   }
 
   function previousWeek() {
-    let currentWeek = parseInt($("#selectedWeekDropDown").val());
-    if (currentWeek === 1) {
-      currentWeek = 53;
+    let currentWeek = parseInt(
+      $(`[data-identifier="weekSelection"]`).children().eq(2).val()
+    );
+    currentWeek--;
+    let child;
+    if (currentWeek <= 26) {
+      child = 26 + currentWeek;
+    } else {
+      child = child = currentWeek - 26;
     }
-    document.getElementsByClassName(
-      "k-list"
-    )[0].parentElement.style.opacity = 0;
-    document.getElementsByClassName(
-      "k-list"
-    )[1].parentElement.style.opacity = 0;
-    $("#selectedWeekDropDown")
-      .val(currentWeek - 1)
-      .trigger("change");
-    $(".weekcontainer")
-      .children()
-      .children()
+    document
+      .querySelector(
+        `body > div:nth-child(3) > div > div > div.w-panel > div.w-panel-content > div:nth-child(1) > div:nth-child(2) > div > div > ul > li:nth-child(${child}) > a`
+      )
       .click();
-    setTimeout(() => {
-      $(".schoolcontainer")
-        .children()
-        .children()
-        .click();
-      setTimeout(() => {
-        $(".weekcontainer")
-          .children()
-          .children()
-          .click();
-        setTimeout(() => {
-          document.getElementsByClassName(
-            "k-list"
-          )[0].parentElement.style.opacity = 100;
-          document.getElementsByClassName(
-            "k-list"
-          )[1].parentElement.style.opacity = 100;
-        }, 100);
-      }, 1);
-    }, 1);
-    $(".k-input:eq(1)").text("Vecka " + parseInt(currentWeek - 1));
   }
 }
