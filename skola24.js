@@ -1,30 +1,32 @@
 /* global $ */
 if (window.location.href.includes("skola24")) {
-  $(".w-page-header").remove();
-  $(".w-panel-content").children().eq(0).append(
-    `<div class="w-col w-s6 w-m3 w-l2">
+  setTimeout(() => {
+    $(".w-page-header").remove();
+    $(".w-panel-content").children().eq(0).append(
+      `<div class="w-col w-s6 w-m3 w-l2">
       <div style="width: 100%;">
       <label for="bd13cbe1f8feb66258859320dbfac1b6" class="">
       <span>Skolmaten</span> <!---->
       </label> <div class="w-flex">
       <a href="http://skolmaten.se/berzeliusskolan/" class="w-button w-block">
-                                    Skolmaten &#127860;
-                                </a></div></div></div>`
-  );
-  $(".w-panel-content").children().eq(0).append(
-    `<div class="w-col w-s6 w-m3 w-l2">
-      <div style="width: 100%;">
-      <label for="bd13cbe1f8feb66258859320dbfac1b6" class="">
-      <span>Vecka</span> <!---->
-      </label> <div class="w-flex">
-                                <button class="w-button w-block" style="margin-right:10px" id="previousWeek">
-                                    <
-                                </button>
-                                <button class="w-button w-block" id="nextWeek">
-                                    >
-                                </button>
-                            </div></div></div>`
-  );
+      Skolmaten &#127860;
+      </a></div></div></div>`
+    );
+    $(".w-panel-content").children().eq(0).append(
+      `<div class="w-col w-s6 w-m3 w-l2">
+        <div style="width: 100%;">
+        <label for="bd13cbe1f8feb66258859320dbfac1b6" class="">
+        <span>Vecka</span> <!---->
+        </label> <div class="w-flex">
+        <button class="w-button w-block" style="margin-right:10px" id="previousWeek">
+        <
+        </button>
+        <button class="w-button w-block" id="nextWeek">
+        >
+        </button>
+        </div></div></div>`
+    );
+  }, 500);
 
   let savedClass = window.location.pathname.split("/")[
     window.location.pathname.split("/").length - 2
