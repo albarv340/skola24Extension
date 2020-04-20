@@ -26,21 +26,20 @@ if (window.location.href.includes("skola24")) {
         </button>
         </div></div></div>`
     );
-  }, 500);
 
-  let savedClass = window.location.pathname.split("/")[
-    window.location.pathname.split("/").length - 2
-  ];
-  // document.getElementById(
-  //   "signatures"
-  // ).outerHTML = `<input id="signatures" autocomplete="off" type="text" data-role="textbox" data-bind="enabled: timetableSelectionEnabled" value="${savedClass}" placeholder="Ange ID" class="w-input w-block">`;
-  chrome.storage.sync.get(
-    {
-      darkMode: false,
-    },
-    function (items) {
-      if (items.darkMode) {
-        const css = `
+    let savedClass = window.location.pathname.split("/")[
+      window.location.pathname.split("/").length - 2
+    ];
+    // document.getElementById(
+    //   "signatures"
+    // ).outerHTML = `<input id="signatures" autocomplete="off" type="text" data-role="textbox" data-bind="enabled: timetableSelectionEnabled" value="${savedClass}" placeholder="Ange ID" class="w-input w-block">`;
+    chrome.storage.sync.get(
+      {
+        darkMode: false,
+      },
+      function (items) {
+        if (items.darkMode) {
+          const css = `
     .w-timetable {
      filter: invert(90%); 
      outline: 1px solid black;
@@ -78,87 +77,88 @@ if (window.location.href.includes("skola24")) {
       filter: invert(90%); 
     }
     `,
-          head = document.head || document.getElementsByTagName("head")[0],
-          style = document.createElement("style");
-        head.appendChild(style);
-        style.type = "text/css";
-        style.appendChild(document.createTextNode(css));
+            head = document.head || document.getElementsByTagName("head")[0],
+            style = document.createElement("style");
+          head.appendChild(style);
+          style.type = "text/css";
+          style.appendChild(document.createTextNode(css));
+        }
       }
-    }
-  );
-  // $("body")
-  //   .children()
-  //   .append(
-  //     `<iframe src="https://berzan.tk/skolmaten" width="100%" height="1200px"></iframe>`
-  // );
+    );
+    // $("body")
+    //   .children()
+    //   .append(
+    //     `<iframe src="https://berzan.tk/skolmaten" width="100%" height="1200px"></iframe>`
+    // );
 
-  // $(window).bind("load", function() {
-  //   setTimeout(() => {
-  //     $("*").css("background-color", "lightgray");
-  //     $("*").css("color", "black");
-  //     $("rect").attr("fill", "lightgray");
-  //   }, 1000);
-  // });
-  // $(document).click(e => {
-  //   console.log(e);
-  // });
+    // $(window).bind("load", function() {
+    //   setTimeout(() => {
+    //     $("*").css("background-color", "lightgray");
+    //     $("*").css("color", "black");
+    //     $("rect").attr("fill", "lightgray");
+    //   }, 1000);
+    // });
+    // $(document).click(e => {
+    //   console.log(e);
+    // });
 
-  document.addEventListener("keyup", function (event) {
-    if (!$("input").is(":focus")) {
-      if (event.key == "d" || event.key == "ArrowRight") {
-        nextWeek();
-      } else if (event.key == "a" || event.key == "ArrowLeft") {
-        previousWeek();
-      } else if (event.key == "s") {
-        window.location.href = "http://www.skolmaten.se/berzeliusskolan";
-      } else if (event.key == "S") {
-        window.open("http://www.skolmaten.se/berzeliusskolan");
-      } else if (event.code == "Space") {
-        location.reload();
+    document.addEventListener("keyup", function (event) {
+      if (!$("input").is(":focus")) {
+        if (event.key == "d" || event.key == "ArrowRight") {
+          nextWeek();
+        } else if (event.key == "a" || event.key == "ArrowLeft") {
+          previousWeek();
+        } else if (event.key == "s") {
+          window.location.href = "http://www.skolmaten.se/berzeliusskolan";
+        } else if (event.key == "S") {
+          window.open("http://www.skolmaten.se/berzeliusskolan");
+        } else if (event.code == "Space") {
+          location.reload();
+        }
       }
-    }
-  });
+    });
 
-  $("#previousWeek").click(function (event) {
-    previousWeek();
-  });
-  $("#nextWeek").click(function (event) {
-    nextWeek();
-  });
+    $("#previousWeek").click(function (event) {
+      previousWeek();
+    });
+    $("#nextWeek").click(function (event) {
+      nextWeek();
+    });
 
-  function nextWeek() {
-    let currentWeek = parseInt(
-      $(`[data-identifier="weekSelection"]`).children().eq(2).val()
-    );
-    currentWeek++;
-    let child;
-    if (currentWeek <= 26) {
-      child = 26 + currentWeek;
-    } else {
-      child = child = currentWeek - 26;
+    function nextWeek() {
+      let currentWeek = parseInt(
+        $(`[data-identifier="weekSelection"]`).children().eq(2).val()
+      );
+      currentWeek++;
+      let child;
+      if (currentWeek <= 26) {
+        child = 26 + currentWeek;
+      } else {
+        child = child = currentWeek - 26;
+      }
+      document
+        .querySelector(
+          `body > div:nth-child(3) > div > div > div.w-panel > div.w-panel-content > div:nth-child(1) > div:nth-child(2) > div > div > ul > li:nth-child(${child}) > a`
+        )
+        .click();
     }
-    document
-      .querySelector(
-        `body > div:nth-child(3) > div > div > div.w-panel > div.w-panel-content > div:nth-child(1) > div:nth-child(2) > div > div > ul > li:nth-child(${child}) > a`
-      )
-      .click();
-  }
 
-  function previousWeek() {
-    let currentWeek = parseInt(
-      $(`[data-identifier="weekSelection"]`).children().eq(2).val()
-    );
-    currentWeek--;
-    let child;
-    if (currentWeek <= 26) {
-      child = 26 + currentWeek;
-    } else {
-      child = child = currentWeek - 26;
+    function previousWeek() {
+      let currentWeek = parseInt(
+        $(`[data-identifier="weekSelection"]`).children().eq(2).val()
+      );
+      currentWeek--;
+      let child;
+      if (currentWeek <= 26) {
+        child = 26 + currentWeek;
+      } else {
+        child = child = currentWeek - 26;
+      }
+      document
+        .querySelector(
+          `body > div:nth-child(3) > div > div > div.w-panel > div.w-panel-content > div:nth-child(1) > div:nth-child(2) > div > div > ul > li:nth-child(${child}) > a`
+        )
+        .click();
     }
-    document
-      .querySelector(
-        `body > div:nth-child(3) > div > div > div.w-panel > div.w-panel-content > div:nth-child(1) > div:nth-child(2) > div > div > ul > li:nth-child(${child}) > a`
-      )
-      .click();
-  }
+  }, 500);
 }
